@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SerialPortTool</string>
+    <string name="open">Open</string>
+    <string name="serial_port_tool_v1_0">Serial Port Tool V1.0</string>
+</resources>
