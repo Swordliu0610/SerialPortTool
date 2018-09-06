@@ -1,5 +1,19 @@
 <resources>
     <string name="app_name">SerialPortTool</string>
-    <string name="open">Open</string>
-    <string name="serial_port_tool_v1_0">Serial Port Tool V1.0</string>
+    <string name="text_of_open_button">Open</string>
+    <string name="hint_text_of_output_box">Serial Port Tool V1.0</string>
+    <string name="text_of_send_button">Send</string>
+    <string name="text_of_loop_checkbox">Loop</string>
+    <string name="text_of_close_button">Close</string>
+    <string name="text_of_stop_button">Stop</string>
+    <string name="hint_text_of_serial_port_box">Serial Port</string>
+    <string name="hint_text_of_baud_rate_box">Baud Rate</string>
+    <string name="hint_text_of_input_box">Send Data</string>
+    <string name="title_of_waring_1">Warning</string>
+    <string name="message_of_waring_1">Serial Port name is empty.</string>
+    <string name="title_of_waring_2">Warning</string>
+    <string name="message_of_waring_2">Baud rate is empty.</string>
+    <string name="title_of_waring_3">Warning</string>
+    <string name="message_of_waring_3">Open Serial Port failed.</string>
+    <string name="ok_of_waring">OK</string>
 </resources>

@@ -12,9 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:gravity="top|start"
-        android:hint="@string/serial_port_tool_v1_0"
+        android:hint="@string/hint_text_of_output_box"
         android:scrollHorizontally="false"
         android:singleLine="false"
+        android:inputType="textUri"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,7 +23,7 @@
         android:id="@+id/OpenButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/open"
+        android:text="@string/text_of_open_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -30,7 +31,7 @@
         android:id="@+id/SerialPort"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Serial Port"
+        android:hint="@string/hint_text_of_serial_port_box"
         android:text="ttyHSL0"
         android:inputType="textUri"
         android:singleLine="true"
@@ -42,7 +43,7 @@
         android:id="@+id/BaudRate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Baud Rate"
+        android:hint="@string/hint_text_of_baud_rate_box"
         android:text="115200"
         android:inputType="number"
         android:singleLine="true"
@@ -68,7 +69,7 @@
         android:id="@+id/InputBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="command"
+        android:hint="@string/hint_text_of_input_box"
         android:singleLine="true"
         android:inputType="textUri"
         app:layout_constraintEnd_toEndOf="parent"
@@ -79,7 +80,7 @@
         android:id="@+id/SendButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Send"
+        android:text="@string/text_of_send_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline2" />
 
@@ -87,7 +88,7 @@
         android:id="@+id/LoopBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Loop"
+        android:text="@string/text_of_loop_checkbox"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </android.support.constraint.ConstraintLayout>

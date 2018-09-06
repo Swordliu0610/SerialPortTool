@@ -48,9 +48,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main); // load layout xml file.
 
-        if (!DrawMainUI()) {
-            return;
-        }
+        DrawMainUI();
     }
 
     private boolean DrawMainUI() {
@@ -100,22 +98,22 @@ public class MainActivity extends AppCompatActivity {
 
             // Get Serial Port name.
             mSerialPort = gSerialPortBox.getText().toString();
-            if (mSerialPort == null || "".equals(mSerialPort)) {
+            if ("".equals(mSerialPort)) {
                 new AlertDialog.Builder(this)
-                        .setTitle("Warning")
-                        .setMessage("Serial Port name is empty.")
-                        .setPositiveButton("OK", null)
+                        .setTitle(R.string.title_of_waring_1)
+                        .setMessage(R.string.message_of_waring_1)
+                        .setPositiveButton(R.string.ok_of_waring, null)
                         .show();
                 return false;
             }
 
             // Get Serial Port baud rate.
             mBaudRateStr = gBaudRateBox.getText().toString();
-            if (mBaudRateStr == null || "".equals(mBaudRateStr)) {
+            if ("".equals(mBaudRateStr)) {
                 new AlertDialog.Builder(this)
-                        .setTitle("Warning")
-                        .setMessage("Baud rate is empty.")
-                        .setPositiveButton("OK", null)
+                        .setTitle(R.string.title_of_waring_2)
+                        .setMessage(R.string.message_of_waring_2)
+                        .setPositiveButton(R.string.ok_of_waring, null)
                         .show();
                 return false;
             }
@@ -130,9 +128,9 @@ public class MainActivity extends AppCompatActivity {
             } catch (IOException e) {
                 Log.d(TAG, "Open Serial Port failed: " + e.toString());
                 new AlertDialog.Builder(this)
-                        .setTitle("Warning")
-                        .setMessage("Open Serial Port failed:" + e.toString())
-                        .setPositiveButton("OK", null)
+                        .setTitle(R.string.title_of_waring_3)
+                        .setMessage(R.string.message_of_waring_3)
+                        .setPositiveButton(R.string.ok_of_waring, null)
                         .show();
                 return false;
             }
@@ -143,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
             gInputStream  = gSerialPort.getInputStream();
             gOutputStream = gSerialPort.getOutputStream();
             gOpenFlag = true;
-            gOpenButton.setText("Close");
+            gOpenButton.setText(R.string.text_of_close_button);
 
             // Enable send button and loop checkbox
             gSendButton.setEnabled(true);
@@ -162,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
                 gSerialPort.close();
                 gSerialPort = null;
                 gOpenFlag = false;
-                gOpenButton.setText("Open");
+                gOpenButton.setText(R.string.text_of_open_button);
             }
 
             if (gReadingThread != null) {
@@ -182,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
         gSendData = gInputBox.getText().toString();
-        if (gSendData == null || "".equals(gSendData)) {
+        if ("".equals(gSendData)) {
             return false;
         }
 
@@ -192,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
                 gSendingThread.start();
 
                 gStopFlag = true;
-                gSendButton.setText("Stop");
+                gSendButton.setText(R.string.text_of_stop_button);
                 gLoopBox.setEnabled(false); // Disable loop checkbox during send data.
             }
             else
@@ -201,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
                     gSendingThread.interrupt();
                 }
                 gStopFlag = false;
-                gSendButton.setText("Send");
+                gSendButton.setText(R.string.text_of_send_button);
                 gLoopBox.setEnabled(true);
             }
         }
@@ -251,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
                     if (gOutputStream != null) {
                         gOutputStream.write(mBuffer);
                         try {
-                            gSendingThread.sleep(500);
+                            Thread.sleep(500);
                         } catch (InterruptedException ie) {
                             ie.printStackTrace();
                             return;
