@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">SerialPortTool</string>
     <string name="text_of_open_button">Open</string>
-    <string name="hint_text_of_output_box">Serial Port Tool V1.0</string>
+    <string name="hint_text_of_output_box">Serial Port Tool V1.1</string>
     <string name="text_of_send_button">Send</string>
     <string name="text_of_loop_checkbox">Loop</string>
     <string name="text_of_close_button">Close</string>

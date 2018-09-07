@@ -154,6 +154,11 @@ public class MainActivity extends AppCompatActivity {
         }
         else // close Serial Port.
         {
+            // stop read data thread before close serial port.
+            if (gReadingThread != null) {
+                gReadingThread.interrupt();
+            }
+
             if (gSerialPort != null) {
                 gInputStream  = null;
                 gOutputStream = null;
@@ -161,10 +166,6 @@ public class MainActivity extends AppCompatActivity {
                 gSerialPort = null;
                 gOpenFlag = false;
                 gOpenButton.setText(R.string.text_of_open_button);
-            }
-
-            if (gReadingThread != null) {
-                gReadingThread.interrupt();
             }
 
             // Disable send button and loop checkbox
@@ -274,7 +275,7 @@ public class MainActivity extends AppCompatActivity {
                         return;
                     }
 
-                    byte[] mBuffer = new byte[64];
+                    byte[] mBuffer = new byte[1024];
                     mSize = gInputStream.read(mBuffer);
                     if (mSize > 0) {
                         onDataReceived(mBuffer, mSize);

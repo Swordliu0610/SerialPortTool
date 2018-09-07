@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">串口工具</string>
     <string name="text_of_open_button">打开</string>
-    <string name="hint_text_of_output_box">串口工具 V1.0</string>
+    <string name="hint_text_of_output_box">串口工具 V1.1</string>
     <string name="text_of_send_button">发送</string>
     <string name="text_of_loop_checkbox">循环</string>
     <string name="text_of_close_button">关闭</string>

@@ -15,7 +15,6 @@
         android:hint="@string/hint_text_of_output_box"
         android:scrollHorizontally="false"
         android:singleLine="false"
-        android:inputType="textUri"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="parent" />
 
