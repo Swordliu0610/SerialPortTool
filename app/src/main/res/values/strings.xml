@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">SerialPortTool</string>
     <string name="text_of_open_button">Open</string>
-    <string name="hint_text_of_output_box">Serial Port Tool V1.1</string>
+    <string name="hint_text_of_output_box">SerialPortTool V1.2   9/13/2018</string>
     <string name="text_of_send_button">Send</string>
     <string name="text_of_loop_checkbox">Loop</string>
     <string name="text_of_close_button">Close</string>
@@ -16,4 +16,8 @@
     <string name="title_of_waring_3">Warning</string>
     <string name="message_of_waring_3">Open Serial Port failed.</string>
     <string name="ok_of_waring">OK</string>
+    <string name="text_save_of_save_button">Save</string>
+    <string name="text_stop_of_save_button">Stop</string>
+    <string name="title_of_waring_4">Warning</string>
+    <string name="message_of_waring_4">Request file write permission failed.</string>
 </resources>

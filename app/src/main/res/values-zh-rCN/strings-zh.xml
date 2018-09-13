@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">串口工具</string>
     <string name="text_of_open_button">打开</string>
-    <string name="hint_text_of_output_box">串口工具 V1.1</string>
+    <string name="hint_text_of_output_box">串口工具 V1.2   9/13/2018</string>
     <string name="text_of_send_button">发送</string>
     <string name="text_of_loop_checkbox">循环</string>
     <string name="text_of_close_button">关闭</string>
@@ -17,4 +17,8 @@
     <string name="title_of_waring_3">警告</string>
     <string name="message_of_waring_3">打开串口失败.</string>
     <string name="ok_of_waring">确认</string>
+    <string name="text_save_of_save_button">保存</string>
+    <string name="text_stop_of_save_button">停止</string>
+    <string name="title_of_waring_4">警告</string>
+    <string name="message_of_waring_4">请求写文件权限失败</string>
 </resources>

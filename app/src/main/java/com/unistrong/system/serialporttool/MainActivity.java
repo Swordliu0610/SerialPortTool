@@ -1,5 +1,7 @@
 package com.unistrong.system.serialporttool;
 
+import android.Manifest;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.EditText;
@@ -10,12 +12,15 @@ import android_serialport_api.SerialPort;
 import android.util.Log;
 import android.view.View;
 import android.app.AlertDialog;
+import android.os.Environment;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
+import java.io.FileOutputStream;
+import android.support.v7.app.AppCompatActivity;
+import android.content.pm.PackageManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private Button   gSendButton    = null;
     private CheckBox gLoopBox       = null;
     private EditText gInputBox      = null;
+    private Button   gSaveButton    = null;
 
     private int gScreenWidth     = 0;
     private int gScreenHeight    = 0;
@@ -33,10 +39,16 @@ public class MainActivity extends AppCompatActivity {
     private boolean gOpenFlag    = false;
     private boolean gLoopFlag    = false;
     private boolean gStopFlag    = false;
+    private boolean gSaveFlag    = false;
+
+    private File gFile = null;
 
     private SerialPort     gSerialPort   = null;
     protected InputStream  gInputStream  = null;
     protected OutputStream gOutputStream = null;
+
+
+    protected FileOutputStream  gSaveOutStream = null;
 
     private String gSendData = null;
     private static final String TAG = "SerialPortTool";
@@ -65,10 +77,12 @@ public class MainActivity extends AppCompatActivity {
         gSendButton    = findViewById(R.id.SendButton);
         gLoopBox       = findViewById(R.id.LoopBox);
         gInputBox      = findViewById(R.id.InputBox);
+        gSaveButton    = findViewById(R.id.SaveButton);
 
         // Default set send button and loop check box disabled.
         gSendButton.setEnabled(false);
         gLoopBox.setEnabled(false);
+        gSaveButton.setEnabled(false);
 
         // Register Open Button click event.
         gOpenButton.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +99,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Register save data button click event.
+        gSaveButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                SaveData();
+            }
+        });
         return true;
     }
 
@@ -146,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
             // Enable send button and loop checkbox
             gSendButton.setEnabled(true);
             gLoopBox.setEnabled(true);
+            gSaveButton.setEnabled(true);
 
             // Create thread to read data.
             gReadingThread = new ReadingThread();
@@ -168,9 +189,11 @@ public class MainActivity extends AppCompatActivity {
                 gOpenButton.setText(R.string.text_of_open_button);
             }
 
-            // Disable send button and loop checkbox
-            gSendButton.setEnabled(false);
-            gLoopBox.setEnabled(false);
+            gSendButton.setEnabled(false); // Disable send button.
+            gLoopBox.setEnabled(false); // Disable loop checkbox.
+            gSaveButton.setEnabled(false); // Disable save button.
+
+            StopToSaveData(); // stop save data.
         }
         return true;
     }
@@ -275,7 +298,7 @@ public class MainActivity extends AppCompatActivity {
                         return;
                     }
 
-                    byte[] mBuffer = new byte[1024];
+                    byte[] mBuffer = new byte[8192];
                     mSize = gInputStream.read(mBuffer);
                     if (mSize > 0) {
                         onDataReceived(mBuffer, mSize);
@@ -295,7 +318,76 @@ public class MainActivity extends AppCompatActivity {
                 if (gOutputBox != null) {
                     gOutputBox.append(new String(buffer, 0, size));
                 }
+                if (gSaveFlag) {
+                    try {
+                        byte[] TempBuffer = new byte[size];
+                        int mIndex;
+
+                        for (mIndex = 0; mIndex < size; mIndex++) {
+                            TempBuffer[mIndex] = buffer[mIndex];
+                        }
+                        gSaveOutStream.write(TempBuffer);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Log.d(TAG, "Write failed.");
+                    }
+                }
             }
         });
+    }
+
+    private boolean SaveData() {
+
+        if (!gSaveFlag) { // Start to save.
+            StartToSaveData();
+        }
+        else // stop to save.
+        {
+            StopToSaveData();
+        }
+        return true;
+    }
+
+    private void StartToSaveData() {
+        if (!checkPermission()) {
+            return;
+        }
+        try {
+            Log.d(TAG, Environment.getExternalStorageDirectory().getPath());
+            gSaveOutStream = new FileOutputStream(Environment.getExternalStorageDirectory().getPath() + "/" +
+                    gSerialPortBox.getText().toString() +
+                    ".txt", true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+        gSaveButton.setText(R.string.text_stop_of_save_button);
+        gSaveFlag = true;
+    }
+
+    private void StopToSaveData() {
+        gSaveFlag = false;
+        gSaveButton.setText(R.string.text_save_of_save_button);
+        try {
+            gSaveOutStream.flush();
+            gSaveOutStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean checkPermission() {
+        String[] PERMISSIONS_STORAGE = {
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            Log.d(TAG, "Current permission:" + checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE));
+            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(PERMISSIONS_STORAGE, PackageManager.PERMISSION_GRANTED);
+                if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    Log.d(TAG, "Request permission failed.");
+                    return false;
+                }
+            }
+        return true;
     }
 }
